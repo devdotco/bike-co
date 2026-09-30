@@ -4,7 +4,8 @@ import { NextResponse } from 'next/server'
  * Contact form → SendGrid. Without SENDGRID_API_KEY the form answers 503
  * rather than pretending to have sent anything.
  */
-const TO = process.env.CONTACT_TO ?? 'nate@dev.co'
+/** Comma-separated. */
+const TO = (process.env.CONTACT_TO ?? 'nate@dev.co,res@dev.co').split(',').map(e => e.trim()).filter(Boolean)
 const FROM = process.env.CONTACT_FROM ?? 'noreply@bike.co'
 
 const clean = (v: unknown, max: number) => (typeof v === 'string' ? v.trim().slice(0, max) : '')
@@ -35,7 +36,7 @@ export async function POST(req: Request) {
     method: 'POST',
     headers: { authorization: `Bearer ${key}`, 'content-type': 'application/json' },
     body: JSON.stringify({
-      personalizations: [{ to: [{ email: TO }] }],
+      personalizations: [{ to: TO.map(email => ({ email })) }],
       from: { email: FROM, name: 'BIKE.co' },
       reply_to: { email, name },
       subject: `bike.co · ${topic || 'Contact'} · ${shop || name}`,
