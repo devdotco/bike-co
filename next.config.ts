@@ -33,7 +33,9 @@ const nextConfig: NextConfig = {
     remotePatterns: [{ protocol: 'https', hostname: 'payload.dev.co' }],
   },
   async redirects() {
-    return [...LEGACY_REDIRECTS, ...SHOPIFY_CATCH_ALL].map(r => ({ ...r, statusCode: 301 as const }))
+    // www → apex first, so every other rule only ever sees bike.co.
+    const www = { source: '/:path*', has: [{ type: 'host' as const, value: 'www.bike.co' }], destination: 'https://bike.co/:path*' }
+    return [www, ...LEGACY_REDIRECTS, ...SHOPIFY_CATCH_ALL].map(r => ({ ...r, statusCode: 301 as const }))
   },
 }
 
