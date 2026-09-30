@@ -1,0 +1,633 @@
+import type { ContentPage } from '@/lib/types'
+
+/**
+ * Platform pages, second half: Chat, Projects, ATS, Courses, PLM, Legal, Canvas.
+ * Every capability claimed here was checked against the module's own repo on
+ * 2026-09-30. Anything that depends on unbuilt Service features is marked roadmap.
+ */
+export const platformPagesB: ContentPage[] = [
+  // ---------------------------------------------------------------- Chat
+  {
+    slug: 'chat',
+    title: 'Chat from the front counter to the back bench',
+    metaTitle: 'Team chat for bike shops: counter to bench | BIKE.co',
+    metaDescription: 'erp.io Chat for bike shops: channels for the counter, the bench and ordering, a thread per bike, email replies, and @claude in the channels you pick.',
+    eyebrow: 'Platform · Chat',
+    lede: "Chat is the erp.io team messaging module. Channels, threads and direct messages, so the question from the counter reaches the right mechanic without anyone putting down a bleed kit to answer it.",
+    status: 'suite',
+    visual: 'suite-grid',
+    icon: 'chat',
+    summary: 'Channels, threads and DMs for the counter, the bench and ordering, in the same workspace as Service.',
+    sections: [
+      {
+        kind: 'prose',
+        heading: 'The shout across the shop, written down',
+        body: [
+          "Every shop has the same conversation fifty times a day. A customer at the counter asks whether their bike is done. The person at the counter does not know, so they walk to the back, or yell, or send a text to a mechanic whose hands are covered in brake fluid. The mechanic answers from memory. Half the time the answer is right.",
+          "Chat puts that conversation somewhere it can be found later. A channel for the front counter, a channel for the bench, a channel for ordering. When the counter asks about a Tarmac with a creaking bottom bracket, the question and the answer sit in a thread under that one bike. Tomorrow, when the rider calls again, whoever picks up can read what was said instead of asking the same mechanic the same question.",
+          "It is the Chat module of erp.io, the same suite that runs Service. You sign in once and it is in the rail beside everything else. There is nothing extra to install; it runs in the browser on the counter computer and the laptop on the bench.",
+        ],
+      },
+      {
+        kind: 'features',
+        heading: 'What Chat does today',
+        intro: 'These are features of the live Chat module. None of them depend on Service.',
+        items: [
+          { title: 'Public, private and announcement channels', body: "Open channels anyone on the team can join, private ones for owners and managers, and announcement channels where only admins post: holiday hours, the new labor rates, the recall notice.", icon: 'chat', status: 'suite' },
+          { title: 'Threads and reactions', body: "Reply in a thread so one bike's back-and-forth does not bury the rest of the channel. A thumbs-up is enough to say the part arrived.", icon: 'text', status: 'suite' },
+          { title: 'Direct messages', body: 'One-to-one conversations for the things that do not belong in a channel, like a schedule swap or a pay question.', icon: 'team', status: 'suite' },
+          { title: 'Files, pins and search', body: 'Attach a photo of the cracked dropout or the supplier invoice, pin the parts-order cutoff times, and search every channel when you need the thread from March.', icon: 'search', status: 'suite' },
+          { title: 'Email when you are mentioned', body: 'A direct message or an @mention sends an email. Reply to that email and the reply posts back into the conversation, which suits the owner who is never at a screen.', icon: 'link', status: 'suite' },
+          { title: '@claude in the channels you choose', body: "An admin switches Claude on per channel. Mention @claude and it answers in the thread. Channels where it is off stay off.", icon: 'bolt', status: 'suite' },
+          { title: 'Projects updates in a channel', body: 'Link a Projects project to a channel and new tasks, completions, edits and comments post there with a link back to the task.', icon: 'kanban', status: 'suite' },
+          { title: 'Admin controls', body: 'Admins manage users and channels and can see Claude usage for the workspace.', icon: 'shield', status: 'suite' },
+        ],
+      },
+      {
+        kind: 'prose',
+        heading: 'One thread per bike',
+        body: [
+          "The habit that makes Chat worth having in a shop is simple: every bike that needs a conversation gets a thread, and the first line of the thread is the ticket number and the bike. \"4471, Trek Rail 9.8, rider says motor cuts out on climbs.\" Everything after that, the diagnostic notes, the photo of the corroded connector, the message to ordering, the reply that the part ships Thursday, lives under that line.",
+          "Today that ticket number can be the Service job number, since work orders are live in Service as numbered jobs, or whatever tag you already hang on the bike. The link between Service jobs and Chat is on the roadmap: the Service plan has mentions in work order notes notifying people through Chat, so a mechanic can @ the service manager from the job itself. Until that is built, the thread per ticket is a convention you run by hand, and it works.",
+          "The same pattern covers the other conversations a shop has every day. A channel for the van if you run mobile repair. A channel for warranty claims, with one thread per claim, so the photos and the rep's replies are in one place when the frame comes back. A channel for ordering, where the bench posts what it needs and the person placing orders marks each one done.",
+        ],
+      },
+      {
+        kind: 'steps',
+        heading: 'Setting Chat up for a shop in an afternoon',
+        intro: 'A starting layout that fits most shops with a counter and a bench.',
+        steps: [
+          { title: 'Create four channels', body: 'Front counter, bench, ordering and announcements. Make announcements admin-only so it stays readable.' },
+          { title: 'Agree the thread rule', body: 'One thread per bike, first line is the ticket number, the make and model, and the complaint. Pin the rule in the bench channel.' },
+          { title: 'Invite the team', body: 'Everyone who works a shift gets an account in the workspace. Part-timers too, since they are the ones who most need the history.' },
+          { title: 'Decide where Claude helps', body: "Switch Claude on in a channel where it is useful, such as ordering or a managers' channel, and leave it off where it is not." },
+          { title: 'Link your Projects', body: 'If you run custom builds or events in Projects, link each project to a channel so updates show up where people already are.' },
+        ],
+      },
+      {
+        kind: 'visual',
+        visual: 'checklist',
+        heading: 'Share the checklist, discuss it in the thread',
+        caption: 'Service checklists are live today. A mechanic fills in the safety inspection with photos, then drops the finding into the bike thread in Chat so the counter can call the rider.',
+      },
+      {
+        kind: 'prose',
+        heading: 'Where Chat stops and Service starts',
+        body: [
+          "Chat is for people talking to people inside your shop. It is not where the record of the repair lives. The checklist a mechanic fills in, with its photos, signature and PDF, belongs in Service, where it is live today. So do the job, its visits, the time clocked against it and the invoice, which are live in Service too. Parts will join them once inventory is built.",
+          "Chat is also not how you talk to riders. Customer texts, the \"your bike is ready\" message and two-way messaging with the rider are on the Service roadmap and are planned to run through the CRM's telephony. Keeping the two apart matters: a mechanic's frank note about a customer's drivetrain should never end up in a text to that customer.",
+          "What Chat gives you right now is a written memory for the shop. The service manager on a Saturday can read what Thursday's mechanic found. A new hire can scroll the ordering channel and learn which distributor is fast. That is useful before any of the Service roadmap arrives, and it will be more useful after.",
+        ],
+      },
+      {
+        kind: 'callout',
+        tone: 'honest',
+        heading: 'What exists today and what does not',
+        body: "Chat is live, and so are Service work orders and checklists. Conversations attached to a Service work order, and @mentions from work order notes, are on the Service roadmap. Until then, run one thread per job number by hand.",
+      },
+    ],
+    faqs: [
+      { q: 'Can we have a separate conversation for each repair?', a: "Yes, as a thread per bike in a channel, which works today. Service work orders are live, but a conversation attached directly to one is on the roadmap. Put the Service job number in the first line of each thread so it can be searched." },
+      { q: 'Do mechanics need to install an app?', a: 'No. Chat runs in the browser, on the counter computer or a bench laptop. Anyone signed in to the erp.io workspace can open it from the module rail.' },
+      { q: 'Can Chat send texts to customers?', a: 'No. Chat is internal team messaging. Status texts to riders are on the Service roadmap and are planned to go out through the CRM telephony, kept separate from staff conversations.' },
+      { q: 'What does @claude do in a channel?', a: 'It answers in the thread when someone mentions it, in channels where an admin has switched it on. It is off unless an admin turns it on for that channel, and admins can see usage.' },
+      { q: 'What happens if the owner is not at a screen?', a: 'A direct message or an @mention sends them an email, and replying to that email posts the reply back into Chat. The conversation stays in one place even when someone answers from their inbox.' },
+    ],
+    related: ['/platform/projects', '/product/service-checklists', '/product/work-orders', '/product/team-permissions'],
+  },
+
+  // ---------------------------------------------------------------- Projects
+  {
+    slug: 'projects',
+    title: 'Projects for custom builds, shop events and the spring prep',
+    metaTitle: 'Projects for bike shops: builds, events, prep | BIKE.co',
+    metaDescription: 'erp.io Projects for bike shops: run custom builds, demo days and pre-season prep as projects with boards, timelines, recurring tasks and dependencies.',
+    eyebrow: 'Platform · Projects',
+    lede: "Projects is the erp.io task and project module. It holds the work that is not a single repair: the custom gravel build waiting on a fork, the demo day in April, the list of things that must happen before the spring rush.",
+    status: 'suite',
+    visual: 'suite-grid',
+    icon: 'kanban',
+    summary: 'Boards, timelines and recurring tasks for custom builds, events and seasonal prep.',
+    sections: [
+      {
+        kind: 'prose',
+        heading: 'The work that is not a repair',
+        body: [
+          "A tune-up has a start and an end, and it fits on one ticket. A lot of what keeps a shop running does not. A custom build is thirty parts from four distributors, a frame that may or may not arrive in the size promised, and a rider who wants to approve the bar tape color. A demo day is a truck booking, a permit, a stack of rental waivers and a Saturday staffing plan. Getting ready for spring is a list of fifty small things that nobody owns.",
+          "That work usually lives in the owner's head, a notebook, or a whiteboard nobody photographs before it gets wiped. Projects gives it a home. Each piece of work is a task with an owner and a due date. Tasks sit in sections, sections sit in projects, and you can look at a project as a list, a board, a calendar or a timeline.",
+          "Projects is part of erp.io, the same workspace as Service and Chat. You do not need another login or another subscription outside the plan you already have.",
+        ],
+      },
+      {
+        kind: 'features',
+        heading: 'What Projects does today',
+        intro: 'Everything below is live in the Projects module.',
+        items: [
+          { title: 'Four views of one project', body: 'List for the detail, board for the flow, calendar for dates, timeline for anything with a sequence, like a build that cannot be wheeled until the hubs arrive.', icon: 'kanban', status: 'suite' },
+          { title: 'Sections and milestones', body: 'Break a build into Ordered, Waiting on parts, On the stand and Final check. Mark the day the rider picks up as a milestone.', icon: 'stack', status: 'suite' },
+          { title: 'Subtasks and dependencies', body: 'A task can have subtasks and can depend on another task, so the timeline shows what is holding up what.', icon: 'link', status: 'suite' },
+          { title: 'Recurring tasks', body: 'Daily, weekly, every two weeks, monthly or quarterly. Clean and calibrate the torque wrenches, check the bleed kit stock, reorder shop consumables.', icon: 'calendar', status: 'suite' },
+          { title: 'Owners, watchers and comments', body: 'Assign a task, add watchers who want updates, comment and attach files on the task itself.', icon: 'team', status: 'suite' },
+          { title: 'Simple automations', body: 'When a task is completed, changes status or gets assigned, Projects can change its status, assign someone, add a label or move it to another section.', icon: 'cog', status: 'suite' },
+          { title: 'CSV import', body: 'Bring in an existing list with titles, descriptions, assignees, due dates, priority, status, labels and sections.', icon: 'box', status: 'suite' },
+          { title: 'Posts into Chat', body: 'Link a project to a Chat channel and task updates appear there with a link back.', icon: 'chat', status: 'suite' },
+        ],
+      },
+      {
+        kind: 'prose',
+        heading: 'A custom build as a project',
+        body: [
+          "Take a custom build. Create a project named for the rider and the bike. Sections follow the build: Spec agreed, Parts ordered, Parts in, On the stand, Final check, Picked up. Each component is a task: frame, fork, wheels, groupset, cockpit, contact points. When the frame arrives, the task moves across the board. When the wheels depend on hubs that are backordered, the dependency shows on the timeline and you can see at a glance that the pickup date is at risk.",
+          "Comments on each task hold the conversation that matters to that part: the distributor's ETA, the photo of the head tube badge, the note that the rider changed their mind on crank length. Link the project to a channel in Chat and the bench sees each update without opening Projects.",
+          "If your shop does enough custom work that you need a versioned bill of materials, with sizing, compatibility rules and cost rollups, that is what PLM is for. Projects tracks who is doing what and when. PLM tracks what the bike is made of.",
+        ],
+      },
+      {
+        kind: 'table',
+        heading: 'What goes where',
+        intro: 'A quick guide to which erp.io module holds which kind of shop work.',
+        columns: ['Work', 'Where it lives', 'Status'],
+        rows: [
+          ['A tune-up or repair on one bike', 'Service work order', 'Live'],
+          ['The tune-up or safety checklist for that bike', 'Service checklist', 'Live'],
+          ['A custom build with a pickup date', 'Projects', 'Live'],
+          ['The parts list for that build, with revisions', 'PLM', 'Live'],
+          ['Demo day, clinic night or a shop move', 'Projects', 'Live'],
+          ['Pre-season prep and recurring shop chores', 'Projects', 'Live'],
+          ['The conversation about any of it', 'Chat', 'Live'],
+        ],
+        note: 'Service work orders are live as numbered jobs with visits. A Service job cannot be linked to a Projects task yet.',
+      },
+      {
+        kind: 'prose',
+        heading: 'Events and the spring prep',
+        body: [
+          "A shop event is a small project with a hard date. A demo day has a vendor to confirm, a location to book, bikes to prep and a rota for the day. Put it on a timeline with the event as a milestone and work backward. The calendar view shows the week everything lands at once, which is usually the week to start earlier.",
+          "Spring prep is the project most shops never write down. In January it feels like there is plenty of time. By March the bench is full and the stand that needed a new clamp still has the old one. Make a project in the quiet months with every task that has to be done before the rush: service the stands, restock cables and housing, book the extra mechanic's start date, update the labor rate sheet, deep-clean the wash area. Give each one an owner and a date. Make the yearly ones recur so next January the list writes itself.",
+          "None of this needs a work order, and none of it needs Service to be finished. It is the part of running a shop that Projects handles well today.",
+        ],
+      },
+      {
+        kind: 'visual',
+        visual: 'compare-grid',
+        heading: 'Projects beside Service',
+        caption: 'Projects holds builds, events and prep. Service holds the repair record: quotes, work orders, checklists and invoices, all live today.',
+      },
+      {
+        kind: 'callout',
+        tone: 'honest',
+        heading: 'What connects today and what does not',
+        body: "Projects and Chat are live, and so are Service work orders and checklists. Service has built its half of the link that lets a Projects task carry a Service checklist; the Projects half is not built yet. Linking a Service work order to a Projects task is on the roadmap.",
+      },
+    ],
+    faqs: [
+      { q: 'Can I track custom builds in Projects?', a: 'Yes. Make a project per build with sections for each stage and a task per component, then use the board or timeline to see what is waiting on what. For a versioned bill of materials with sizing and compatibility rules, use PLM alongside it.' },
+      { q: 'Should I use Projects for repairs?', a: 'Not as the long-term answer. Repairs belong in Service work orders, which are live today. Projects is for work that spans days or weeks and many people, like builds, events and seasonal prep.' },
+      { q: 'Can tasks repeat every season?', a: 'Yes. A task can recur daily, weekly, every two weeks, monthly or quarterly, with an end date or a maximum number of occurrences, so recurring shop chores come back on their own.' },
+      { q: 'Can I import my existing to-do list?', a: 'Yes, from a CSV with columns for title, description, assignee email, due date, priority, status, labels, section and estimated minutes.' },
+      { q: 'Can a checklist be attached to a Projects task?', a: "Not yet through Service. Service has built its side of the link that lets a Projects task show and complete a Service checklist, and the Projects side is still to do. Service checklists themselves are live today." },
+    ],
+    related: ['/platform/plm', '/platform/chat', '/platform/canvas', '/product/work-orders'],
+  },
+
+  // ---------------------------------------------------------------- ATS
+  {
+    slug: 'ats',
+    title: 'Hire mechanics before the spring rush',
+    metaTitle: 'Hiring for bike shops: ATS for mechanics | BIKE.co',
+    metaDescription: 'erp.io ATS for bike shops: job records, a pipeline per role, interviews with scorecards, offers and hiring reports, so spring hires start before April.',
+    eyebrow: 'Platform · ATS',
+    lede: "ATS is the erp.io applicant tracking module. One place for every mechanic, service writer and seasonal hire you are talking to, from the first call to the signed offer.",
+    status: 'suite',
+    visual: 'suite-grid',
+    icon: 'hire',
+    summary: 'Jobs, pipelines, interviews, scorecards and offers for hiring mechanics.',
+    sections: [
+      {
+        kind: 'prose',
+        heading: 'The hire you needed in February',
+        body: [
+          "Every shop owner knows the calendar. The first warm weekend in spring, the bench goes from quiet to three weeks out. The mechanic you should have hired in February is the one you are now trying to find in April, when every other shop in town is looking too. By the time they have learned your process, it is June.",
+          "Hiring early means running a small hiring process in the quiet months, alongside everything else. That usually means applications in one inbox, notes on scraps of paper, and a vague memory of which candidate was good on the phone. ATS keeps it in one place. Each role has a pipeline, each candidate has a record, and you can see at a glance who is waiting on you.",
+          "ATS is part of erp.io, in the same workspace as Service. Candidates are stored as people in the erp.io CRM, so someone who applied last season and a rider who became a candidate are the same record, not two.",
+        ],
+      },
+      {
+        kind: 'features',
+        heading: 'What ATS does today',
+        intro: 'These are features of the live ATS module.',
+        items: [
+          { title: 'Job records', body: 'Title, department, location, a remote flag, a salary range and a description. A job moves through Draft, Published, Paused and Closed.', icon: 'hire', status: 'suite' },
+          { title: 'A pipeline per job', body: 'Each new job starts with Applied, Phone Screen, Interview and Offer, and each candidate sits in one stage at a time.', icon: 'kanban', status: 'suite' },
+          { title: 'Candidates from the CRM', body: 'Search the CRM for a person and add them to a job, with the source they came from and a cover letter if there is one.', icon: 'crm', status: 'suite' },
+          { title: 'Interviews', body: 'Schedule a phone screen, video call, onsite, panel or technical interview with a time, length and interviewers.', icon: 'calendar', status: 'suite' },
+          { title: 'Scorecards', body: 'Rate each interview from strong yes to strong no with notes, so two people interviewing the same mechanic can compare what they saw.', icon: 'check', status: 'suite' },
+          { title: 'Offers', body: 'Record the pay and start date, then track the offer from draft to sent to accepted, declined or rescinded.', icon: 'sign', status: 'suite' },
+          { title: 'Activity history', body: 'Every stage change and status change is logged on the application, so you know when someone was last contacted.', icon: 'stopwatch', status: 'suite' },
+          { title: 'Hiring reports', body: 'Jobs, applications, hires, interviews, rejections and scorecard completion, plus active candidates by stage and by source.', icon: 'chart', status: 'suite' },
+        ],
+      },
+      {
+        kind: 'prose',
+        heading: 'A technical interview is a bench test',
+        body: [
+          "A mechanic's resume tells you where they worked. It does not tell you whether they can true a wheel, bleed a set of hydraulic brakes without contaminating the pads, or set up a Di2 derailleur without guessing. The only way to know is to put them on a stand. ATS has a technical interview type for exactly this: schedule it, name who is running it, and record the result on a scorecard.",
+          "Write down what a good bench test looks like in your shop and use the same one for every candidate. A wheel with a known wobble, a brake that needs a bleed, a bike with a mis-indexed rear derailleur. The scorecard notes say what they did, how long it took and what they missed. When you are choosing between two candidates in March, you compare notes instead of impressions.",
+          "Keep the phone screen short and practical: which systems they have worked on, whether they have done e-bike motor diagnostics, when they can start, and whether they are looking for full-time or seasonal work. Move them to the next stage the same day, so a good mechanic is not waiting a week to hear back.",
+        ],
+      },
+      {
+        kind: 'steps',
+        heading: 'A spring hiring plan',
+        intro: 'Working back from the week the bench fills up.',
+        steps: [
+          { title: 'December: write the role', body: 'Create the job in ATS with the pay range, the hours and what the role covers. Leave it in Draft until the wording is right.' },
+          { title: 'January: post and collect', body: "ATS does not publish a careers page for you. Post the role where mechanics look, then add each applicant to the job from the CRM with the source they came from." },
+          { title: 'January to February: screen and test', body: 'Phone screen within a day or two, then a technical interview on the stand with a scorecard for each one.' },
+          { title: 'February: offer', body: 'Record the offer with the pay and start date and track it through to accepted.' },
+          { title: 'March: onboard', body: 'Invite the new mechanic to the workspace with the role that sets their Service permissions, and enroll them in your training course before the rush.' },
+        ],
+      },
+      {
+        kind: 'visual',
+        visual: 'reports',
+        heading: 'See where hiring is stuck',
+        caption: 'ATS reports show applications, interviews, hires and scorecard completion, with candidates by stage and by source.',
+      },
+      {
+        kind: 'prose',
+        heading: 'From hired to on the bench',
+        body: [
+          "The day someone accepts is when ATS hands over to the rest of the suite. Add the new mechanic to the erp.io workspace with the right role. Role-based permissions are live in Service today: the workspace role, from crew to lead, manager, admin and owner, sets what each person can do, so a new mechanic on the crew role can fill in a tune-up checklist and close their visits on day one without being able to change the template or reschedule the week.",
+          "Then give them your standards. Courses lets you build a training course on your tune-up procedure, your safety inspection and your e-bike rules, and assign it before the first shift. The checklist in Service makes sure the standard is followed on every bike. The course makes sure they understand why.",
+          "Scheduling them works in a simple form today. The Service week view lets you assign visits to the new mechanic by day, the Today page shows them their work, and they clock their time against each visit for a manager to approve at the end of the week. Bench-capacity limits per mechanic and hour-by-hour slots are not built yet.",
+        ],
+      },
+      {
+        kind: 'callout',
+        tone: 'honest',
+        heading: 'What ATS does not do',
+        body: 'ATS does not host a public careers page or job board and does not post to job sites for you. Candidates are added to a job from the CRM. Service scheduling assigns visits to a new hire by day; bench-capacity limits per mechanic are on the roadmap.',
+      },
+    ],
+    faqs: [
+      { q: 'Can ATS post my job to job boards?', a: 'No. ATS keeps the job record, the pipeline and the candidates, but it does not publish a careers page or post to job sites. Post the role yourself and add each applicant to the job, noting where they came from.' },
+      { q: 'How do I test a mechanic before hiring?', a: 'Schedule a technical interview in ATS and run a bench test, such as truing a wheel or bleeding a brake. Record what you saw on the scorecard, rated from strong yes to strong no, and use the same test for every candidate.' },
+      { q: 'Where are candidate details stored?', a: 'Candidates are people in the erp.io CRM, and ATS links each application to that person. Someone who applies twice, or who was already a customer, is one record.' },
+      { q: 'Can I see which sources bring the best applicants?', a: 'Yes. ATS reports break down active candidates by source and by stage, alongside totals for applications, interviews, hires and rejections.' },
+      { q: 'What happens after a mechanic accepts an offer?', a: 'You add them to the erp.io workspace with the role that sets their Service permissions, which is live today. Training can be assigned in Courses, and they can be given visits on the Service week schedule and clock their time from day one. Bench-capacity limits per mechanic are on the Service roadmap.' },
+    ],
+    related: ['/platform/courses', '/product/team-permissions', '/platform/crm', '/solutions/growing-shops'],
+  },
+
+  // ---------------------------------------------------------------- Courses
+  {
+    slug: 'courses',
+    title: 'Train new mechanics on your standards',
+    metaTitle: 'Mechanic training courses for bike shops | BIKE.co',
+    metaDescription: 'erp.io Courses for bike shops: turn your tune-up procedure, torque rules and e-bike safety into a course with quizzes, graded work and certificates.',
+    eyebrow: 'Platform · Courses',
+    lede: "Courses is the erp.io course builder. Write down how your shop does a tune-up, a safety check and an e-bike diagnosis, and turn it into training a new mechanic can work through before their first busy Saturday.",
+    status: 'suite',
+    visual: 'suite-grid',
+    icon: 'course',
+    summary: 'AI-assisted courses on your tune-up, torque and e-bike standards, with quizzes and certificates.',
+    sections: [
+      {
+        kind: 'prose',
+        heading: 'Every shop has a standard. Few write it down.',
+        body: [
+          "Ask three mechanics in the same shop what a tune-up includes and you will get three answers. One checks chain wear with a gauge, one eyeballs it. One torques every bolt, one torques the ones that matter. The service manager knows the right answer, but it lives in their head and gets passed on by watching over a shoulder in a busy week.",
+          "Courses is where that standard gets written down and taught. A course is a set of lessons. Each lesson is built from blocks: text, images, video, tables, checklists, quizzes and assignments. A new mechanic works through it at their own pace, you see where they get stuck, and they finish with a certificate you can check.",
+          "Courses is part of erp.io, in the same workspace as Service. The two do different jobs. The Service checklist makes sure the standard is followed on every bike. The course makes sure a new mechanic understands it before they touch one.",
+        ],
+      },
+      {
+        kind: 'features',
+        heading: 'What Courses does today',
+        intro: 'These are features of the live Courses module.',
+        items: [
+          { title: 'A curriculum from a sentence', body: 'Describe the course, such as a two-week onboarding for new mechanics, and the AI proposes an outline. Nothing is written until you accept it.', icon: 'course', status: 'suite' },
+          { title: 'A course assistant that proposes', body: 'The assistant beside the editor suggests changes as a reviewable diff. You accept or reject each one; it cannot change the course on its own.', icon: 'bolt', status: 'suite' },
+          { title: 'Your documents as sources', body: 'Upload your procedures, recordings and reference pages. Generated content cites where it came from, and you can require it to use only approved sources.', icon: 'search', status: 'suite' },
+          { title: 'Quizzes and graded assignments', body: 'Quiz blocks check understanding. Assignments can be graded by AI against a passing score, and quiz gates can stop a learner moving on until they pass.', icon: 'check', status: 'suite' },
+          { title: 'Drip and prerequisites', body: 'Release lessons over time or only after an earlier one is complete, so nobody skips to e-bike motors before brakes.', icon: 'calendar', status: 'suite' },
+          { title: 'Certificates', body: 'Issued as a PDF when a course is finished, with a verification page that confirms it without needing an account.', icon: 'star', status: 'suite' },
+          { title: 'Course review and analytics', body: 'A review scores the course and lists what to fix. Analytics shows where learners stop, which questions everyone misses and who is stuck.', icon: 'chart', status: 'suite' },
+          { title: 'Templates, duplication and translation', body: 'Save a course as a template, duplicate it for a second location, or translate it into a separate course that tracks changes to the original.', icon: 'stack', status: 'suite' },
+        ],
+      },
+      {
+        kind: 'prose',
+        heading: 'Tune-ups, torque specs and e-bike safety',
+        body: [
+          "Start with the tune-up. Write out your procedure in order: what gets checked, what gets adjusted, what gets replaced, and the line where a tune-up becomes an overhaul that needs a new quote. Add photos of what a worn chain, a glazed rotor and a frayed cable look like on your stand. End the lesson with a quiz that asks the questions new mechanics get wrong.",
+          "Torque is a lesson of its own. The rule you teach is the shop rule: every fastener gets the manufacturer's spec, from the manufacturer's documentation, with a torque wrench, and carbon parts get extra care. The numbers themselves should come from the manufacturers, not from memory and not from an AI. Upload the service documents you use as sources and turn on approved-sources-only, and the course builder will cite them or refuse, rather than inventing a figure.",
+          "E-bike safety is where a written standard matters most. Battery handling and storage, what to do with a damaged or swollen pack, isolating power before working on the drive system, the diagnostic steps your shop follows for a motor fault. A quiz gate at the end means nobody moves on to e-bike work without passing it.",
+        ],
+      },
+      {
+        kind: 'steps',
+        heading: 'Build a new-mechanic course',
+        intro: 'A first course most shops can build in a quiet week.',
+        steps: [
+          { title: 'Describe it', body: 'Tell the builder what you need, for example onboarding for a new mechanic covering shop rules, tune-ups, safety checks and e-bikes. Review the outline and accept it.' },
+          { title: 'Add your sources', body: 'Upload your written procedures and the service documents your shop uses, and turn on approved-sources-only.' },
+          { title: 'Write and check each lesson', body: 'Let the assistant draft, then edit it into your voice. Add your own photos from the bench.' },
+          { title: 'Add quizzes and a bench assignment', body: 'A quiz after each lesson, and an assignment where the mechanic describes how they would handle a real job.' },
+          { title: 'Enroll and watch', body: 'Send the new mechanic their sign-in link and check analytics for where they get stuck.' },
+        ],
+      },
+      {
+        kind: 'visual',
+        visual: 'checklist',
+        heading: 'The course teaches it, the checklist enforces it',
+        caption: 'A Service tune-up checklist, live today. Teach the same steps in Courses so a new mechanic knows why each item is on the list.',
+      },
+      {
+        kind: 'prose',
+        heading: 'How Courses and Service fit together',
+        body: [
+          "The checklist and the course should say the same thing. When you build a tune-up template in Service, with its questions, photo requirements and required answers, write the matching lesson in Courses. When you change the procedure, change both. Service keeps each version of a checklist template, so a submission always shows the questions that were asked at the time.",
+          "Learners in Courses are not the same as users of the suite. A learner signs in to the course player with an emailed link and is not a billable erp.io seat. Your mechanic will have both: a workspace account to fill in Service checklists, and a learner sign-in for training.",
+          "There is no automatic link between the two modules today. Courses does not know which checklists a mechanic has filled in, and Service does not check whether someone has passed a course before letting them work on e-bikes. What you can do is use the workspace roles that set Service permissions to control who can build and publish checklist templates, and use the course certificate as your record of who has been trained.",
+        ],
+      },
+      {
+        kind: 'callout',
+        tone: 'honest',
+        heading: 'Where the line is',
+        body: 'Courses and Service checklists are both live, but they are not linked: finishing a course does not change what anyone can do in Service. Courses does not supply torque figures or manufacturer procedures; you bring those as sources.',
+      },
+    ],
+    faqs: [
+      { q: 'Can AI write my training course?', a: 'It can draft one. Describe the course and the builder proposes an outline, then the assistant suggests lessons and edits that you accept or reject. Nothing is saved until you approve it, and you should edit every lesson into your own standard.' },
+      { q: 'Will it make up torque specs?', a: 'Not if you set it up properly. Upload the manufacturer documents you use as sources and turn on approved-sources-only, and generation cites those sources or refuses instead of inventing. Always teach mechanics to check the manufacturer spec on the part.' },
+      { q: 'Does each trainee count as a user on my plan?', a: 'No. A learner in Courses signs in with an emailed link and is not a billable erp.io seat. A mechanic who also fills in Service checklists needs a workspace account for that.' },
+      { q: 'Can I stop someone skipping ahead?', a: 'Yes. Lessons can drip over time, require an earlier lesson first, or sit behind a quiz gate that must be passed before the next one opens.' },
+      { q: 'How do I prove someone finished training?', a: 'Courses issues a PDF certificate when the course is complete, with a public verification page that confirms it is genuine without anyone needing an account.' },
+    ],
+    related: ['/product/service-checklists', '/platform/ats', '/resources/tune-up-checklist', '/resources/ebike-diagnostic-checklist'],
+  },
+
+  // ---------------------------------------------------------------- PLM
+  {
+    slug: 'plm',
+    title: 'Custom builds as a versioned bill of materials',
+    metaTitle: 'PLM for custom bike builds and parts BOMs | BIKE.co',
+    metaDescription: 'erp.io PLM for custom-build shops: frame, build kit and components as a versioned BOM, with size options, compatibility rules and cost and weight rollups.',
+    eyebrow: 'Platform · PLM',
+    lede: "PLM is the erp.io product lifecycle module, built for manufacturers. For a shop that does real custom builds, it holds the frame, the build kit and every component as a bill of materials you can version, compare and check for compatibility.",
+    status: 'suite',
+    visual: 'build-bom',
+    icon: 'bom',
+    summary: 'Versioned build BOMs with size options, compatibility rules, and cost and weight rollups.',
+    sections: [
+      {
+        kind: 'prose',
+        heading: 'A custom build is a product',
+        body: [
+          "Most shops do not need PLM. If your custom work is a few dream builds a year, a project in Projects and a spreadsheet will do. But some shops build bikes as a core part of the business: a house gravel build offered in five sizes, a frame builder's workshop, a shop that assembles a dozen custom road bikes a month. For them, each build is a product, and a spreadsheet stops being enough the first time a distributor discontinues a crankset halfway through a batch.",
+          "PLM treats the bike as a structure. The top line is the build. Under it sit the frame, the fork, the wheelset, the groupset and the cockpit. Under the groupset sit the shifters, derailleurs, crankset, cassette, chain and brakes. Each line has a quantity and a find number, and each part has a record of its own, with a part number, a classification and a revision history.",
+          "The PLM module was built for manufacturing teams, and it carries more than a shop will use. The parts that matter for custom builds are the structures, the variants, the rollups and the change history.",
+        ],
+      },
+      {
+        kind: 'features',
+        heading: 'What PLM does today that fits a build shop',
+        intro: 'A selection of the live PLM module, chosen for custom builds.',
+        items: [
+          { title: 'Multi-level structures', body: 'The build, its assemblies and their components, with quantities, units and find numbers, resolved down to the last bolt.', icon: 'bom', status: 'suite' },
+          { title: 'Options and variants', body: 'Option sets such as frame size or drivetrain, with rules that say which options require or exclude others.', icon: 'stack', status: 'suite' },
+          { title: 'A configurator that checks compatibility', body: 'Pick a combination and PLM says whether it is buildable, and names the rule that says it is not.', icon: 'check', status: 'suite' },
+          { title: 'Cost and weight rollups', body: 'Cost and mass rolled up from one resolution of the structure. Parts with no price or weight are counted as unknown, never as zero.', icon: 'scale', status: 'suite' },
+          { title: 'Revisions and baselines', body: 'Revise a part or a build, freeze a baseline of the spec you sold, and compare two structures side by side.', icon: 'tag', status: 'suite' },
+          { title: 'Where-used', body: 'Find every build that uses a part, which is the first question when a supplier discontinues it.', icon: 'search', status: 'suite' },
+          { title: 'Alternates and substitutes', body: 'Record parts that are interchangeable everywhere separately from a substitute approved in one position only.', icon: 'link', status: 'suite' },
+          { title: 'Change requests and orders', body: 'Change requests, change orders, deviations and approvals, so a spec change on a house build is recorded and signed off.', icon: 'clipboard', status: 'suite' },
+        ],
+      },
+      {
+        kind: 'prose',
+        heading: 'Sizing and compatibility as rules',
+        body: [
+          "Every custom build shop has a list of things that do not go together. A 12-speed chain on an 11-speed cassette. A flat-mount caliper on a post-mount frame. A 44mm head tube and a straight-steerer fork without the right headset. That list usually lives in the heads of the two people who have been building longest.",
+          "PLM's variants let you write those rules down. An option set is a choice the rider makes, such as frame size, drivetrain or wheel size. A rule says that choosing one option requires another, or excludes it, with a sentence explaining why. The configurator runs the rules against a combination and tells you whether it is buildable and which rule is in the way, so a junior mechanic spec-ing a build gets the same answer the senior one would give.",
+          "Sizing works the same way. The frame comes in sizes, and some components change with it: stem length, bar width, crank length, seatpost. Make them options, write the rules, and the structure for a size 54 differs from the one for a 58 only where it should.",
+        ],
+      },
+      {
+        kind: 'visual',
+        visual: 'compare-grid',
+        heading: 'Compare two builds',
+        caption: 'Compare the spec you quoted with the spec you built, or this season\'s house build with last season\'s, line by line.',
+      },
+      {
+        kind: 'table',
+        heading: 'A custom build in PLM',
+        intro: 'How the parts of a build map onto the PLM model.',
+        columns: ['On the bench', 'In PLM'],
+        rows: [
+          ['The build the rider ordered', 'A top-level structure with its own revision'],
+          ['Frame, fork, wheels, groupset, cockpit', 'Assemblies and components with quantities and find numbers'],
+          ['Frame sizes and drivetrain choices', 'Option sets'],
+          ['Things that do not fit together', 'Requires and excludes rules, checked by the configurator'],
+          ['Build price and weight', 'Cost and mass rollups, with unknowns counted'],
+          ['A discontinued crankset', 'Where-used, then a change order'],
+          ['The spec you sold', 'A baseline you can compare against later'],
+        ],
+      },
+      {
+        kind: 'prose',
+        heading: 'How PLM connects to Service',
+        body: [
+          "Today, it does not connect directly. PLM is a separate module in the suite. At present it asks for its own sign-in rather than using the suite hand-off the other modules use. A build structure in PLM is not linked to a Service work order, and Service has no parts inventory for PLM parts to match.",
+          "Half of that link now exists: work orders are live in Service as numbered jobs with line items. The other half is not. Parts inventory and purchase orders are planned for a later phase of the Service build. When they exist, the natural connection is a build BOM in PLM feeding the parts list of a build work order. That is a direction, not a commitment with a date.",
+          "What you can do today is keep the build itself in PLM, the schedule and people in Projects, the conversation in Chat, and the final safety inspection in a Service checklist, which is live. A rider picking up a custom build should get the same signed inspection PDF as any other bike.",
+        ],
+      },
+      {
+        kind: 'callout',
+        tone: 'honest',
+        heading: 'What exists and what does not',
+        body: 'PLM is live, and so are Service checklists for the final inspection. Service work orders are live, but linking a PLM build to one is not built, and drawing parts from Service inventory depends on inventory, which is on the roadmap. PLM currently asks for its own sign-in.',
+      },
+    ],
+    faqs: [
+      { q: 'Does my shop need PLM?', a: 'Only if custom or house builds are a real part of the business. For a few builds a year, a project in Projects is enough. PLM earns its place when you build in sizes and batches and need versions, compatibility rules and rollups.' },
+      { q: 'Can PLM check whether components are compatible?', a: 'Yes, if you write the rules. Option sets hold the choices and rules say which options require or exclude others. The configurator then tells you whether a combination is buildable and which rule blocks it.' },
+      { q: 'Can I get a build price and weight?', a: 'Yes. PLM rolls up cost and mass from the structure. Any part with no price or weight is counted as unknown rather than zero, so a total never looks complete when it is not.' },
+      { q: 'Can I import my existing parts spreadsheet?', a: 'Yes. PLM imports from CSV and Excel files, including files saved out of other systems, and reports what it mapped.' },
+      { q: 'Does a PLM build create a work order in Service?', a: 'No. Service work orders are live, but there is no link between PLM and Service today, and parts inventory is on the roadmap. The final inspection can be done with a live Service checklist.' },
+    ],
+    related: ['/platform/projects', '/product/parts-inventory', '/product/service-checklists', '/solutions/retail-service-shops'],
+  },
+
+  // ---------------------------------------------------------------- Legal
+  {
+    slug: 'legal',
+    title: 'Legal help for waivers, leases and warranty questions',
+    metaTitle: 'Rental waivers, leases and warranties | BIKE.co',
+    metaDescription: 'erp.io Legal for bike shops: draft rental waivers, review and redline a lease, keep your own templates and clauses, and research questions with cited sources.',
+    eyebrow: 'Platform · Legal',
+    lede: "Legal is the erp.io module for drafting, reviewing and researching documents. For a shop, that means the rental waiver, the lease on your space and the warranty question that comes up once a month. It is a tool, not a lawyer.",
+    status: 'suite',
+    visual: 'suite-grid',
+    icon: 'scale',
+    summary: 'Draft waivers, review and redline leases, and research questions with citations.',
+    sections: [
+      {
+        kind: 'prose',
+        heading: 'The paperwork nobody taught you',
+        body: [
+          "Nobody opens a bike shop to read contracts. Then the landlord sends a renewal with new language about maintenance costs. You start renting e-bikes and need a waiver. A customer insists a cracked frame is a warranty issue and wants to know why you will not just replace it. Each of those is a legal question, and most shop owners either guess, copy something from another shop, or pay an attorney for an hour to answer a question that took five minutes to ask.",
+          "Legal is where you do the groundwork before that hour. Draft a first version of a document, review a contract someone sent you against the points you care about, mark up a Word file with tracked changes, and research a question with answers that cite their sources. You arrive at the attorney with a draft and a list of questions instead of a blank page.",
+          "Legal does not give legal advice, and nothing on this page is legal advice. Rules on waivers, rentals and warranties differ by state and country. Have anything you will rely on reviewed by a licensed attorney where you operate.",
+        ],
+      },
+      {
+        kind: 'features',
+        heading: 'What Legal does today',
+        intro: 'These are features of the live Legal module.',
+        items: [
+          { title: 'Drafter', body: 'Write a document with AI help in an editor, starting from a blank page, a library template or one of your own.', icon: 'quote', status: 'suite' },
+          { title: 'Template library', body: 'A curated, read-only library of templates you can filter by title, type or jurisdiction. Opening one starts a draft of your own.', icon: 'stack', status: 'suite' },
+          { title: 'Your own templates', body: 'Keep your own agreements as editable templates, private to your workspace, with the parts to fill in marked.', icon: 'sign', status: 'suite' },
+          { title: 'Clause library', body: 'Language you reuse, such as your damage policy or storage terms, available from the drafter as you write.', icon: 'clipboard', status: 'suite' },
+          { title: 'Review', body: 'Review a finished document, such as a lease someone sent you, against your own instructions, standard analyses and a playbook. An uploaded file is read, not stored.', icon: 'search', status: 'suite' },
+          { title: 'Redline', body: 'Mark up a Word document, answer the other side\'s tracked changes and export it with your changes as tracked changes under your name, or as a PDF.', icon: 'text', status: 'suite' },
+          { title: 'Playbooks', body: 'Rules a review checks for, either as exact wording or read for meaning, so every lease gets the same scrutiny.', icon: 'check', status: 'suite' },
+          { title: 'Research assistant', body: 'Answers drawn from a case-law corpus with every claim cited. When the sources do not support an answer, it says so rather than guessing.', icon: 'scale', status: 'suite' },
+        ],
+      },
+      {
+        kind: 'prose',
+        heading: 'Rental waivers and agreements',
+        body: [
+          "If you rent bikes, demo e-bikes or run a small fleet, you need a rental agreement and, in most places, a waiver. They cover who is responsible for damage, what happens if the bike comes back late or not at all, the rider's acknowledgment of the risks, and any age or helmet rules you set. The wording that holds up differs from state to state.",
+          "Start the draft in Legal, from a template or a blank page. Put your own terms in the clause library so the damage schedule and late fees are the same on every agreement. Save the finished agreement as one of your own templates. Then take it to an attorney who practices where you operate and have them approve it. That review is the step that makes it usable, and Legal makes it shorter, not unnecessary.",
+          "Once it is approved, getting it signed is a job for Sign, the erp.io e-signature module. For the handover itself, a Service checklist, which is live today, can record the bike's condition at checkout with photos and the rider's signature, so the damage conversation at return has a before picture.",
+        ],
+      },
+      {
+        kind: 'visual',
+        visual: 'compare-grid',
+        heading: 'What Legal does and what your attorney does',
+        caption: 'Legal drafts, reviews, redlines and researches with citations. A licensed attorney decides whether a document is right for your state and your shop.',
+      },
+      {
+        kind: 'prose',
+        heading: 'Leases and warranty questions',
+        body: [
+          "A commercial lease is the biggest contract most shops sign. Renewals change quietly: a maintenance clause that used to cover the roof now covers the HVAC, a personal guarantee appears, the assignment clause makes it hard to sell the business. Upload the lease to Review with the things you care about, such as maintenance, rent increases, guarantees, signage and hours, and get a report of what the document says about each one. When you are ready to push back, Redline marks up the Word file with tracked changes your attorney or the landlord can read.",
+          "Warranty questions are different. Most turn on the manufacturer's warranty terms, not on the law, so start by reading the manufacturer's document. Upload it to Review and ask what it says about crash damage, original owner, or labor. When the question really is legal, such as what your own obligations are when you sold the bike, the research assistant answers from case law and cites each source, and tells you when it cannot answer.",
+          "In both cases the output is a starting point for a conversation with a professional, not a decision.",
+        ],
+      },
+      {
+        kind: 'callout',
+        tone: 'honest',
+        heading: 'Legal is not legal advice',
+        body: 'Legal helps you draft, review and research. It is not a law firm and does not replace an attorney licensed where you operate. There is no direct link between Legal and Service; signing is done in Sign, and condition records at rental checkout can use a live Service checklist.',
+      },
+    ],
+    faqs: [
+      { q: 'Can Legal write my rental waiver?', a: 'It can help you draft one, from a template or from scratch, and keep your standard clauses consistent. It is not legal advice. Have the finished waiver reviewed by an attorney licensed in your state before you use it.' },
+      { q: 'Can it review my shop lease?', a: 'Yes. Upload the lease to Review with the points you care about and it reports what the document says on each. Redline can then mark up the Word file with tracked changes. An uploaded file is read and not stored.' },
+      { q: 'Can it tell me whether a warranty claim is valid?', a: "No. It can help you read the manufacturer's warranty document and research related legal questions with cited sources, but whether a claim is covered is for the manufacturer and, if it comes to it, an attorney." },
+      { q: 'How do customers sign the waiver?', a: 'Through Sign, the erp.io e-signature module. Legal is where the document is drafted; Sign is where it is sent and signed.' },
+      { q: 'Does the research assistant ever guess?', a: 'It is built not to. Answers are drawn from a case-law corpus with each claim cited, and when the corpus does not support an answer it says so rather than making one up.' },
+    ],
+    related: ['/platform/sign', '/solutions/rental-fleet', '/product/service-checklists', '/platform/canvas'],
+  },
+
+  // ---------------------------------------------------------------- Canvas
+  {
+    slug: 'canvas',
+    title: 'Plan the shop floor and the season on a whiteboard',
+    metaTitle: 'Whiteboards for bike shop layout and planning | BIKE.co',
+    metaDescription: 'erp.io Canvas for bike shops: shared whiteboards to plan the shop floor, map the season and run team retros, with templates, live editing and exports.',
+    eyebrow: 'Platform · Canvas',
+    lede: "Canvas is the erp.io whiteboard. Sketch where the stands go, map the year from the spring rush to winter storage, and run the post-season meeting on sticky notes everyone can edit at once.",
+    status: 'suite',
+    visual: 'suite-grid',
+    icon: 'canvas',
+    summary: 'Shared whiteboards for shop floor layouts, the season plan and team meetings.',
+    sections: [
+      {
+        kind: 'prose',
+        heading: 'The whiteboard that does not get wiped',
+        body: [
+          "Most shops have a whiteboard in the back. It holds the week's plan, a phone number, half a drawing of a new layout and a note that says \"call Shimano rep\" from two months ago. It is useful right up until someone wipes it, and then the plan is gone.",
+          "Canvas is the same idea on a screen. An infinite board with shapes, arrows, text and sticky notes that the whole team can edit at the same time, from the counter, from home, or from the laptop on the bench. Boards live in folders, so the layout plan from last winter is still there next winter.",
+          "Canvas is part of erp.io, in the same workspace as Service. It is where you think things through before they become tasks in Projects or templates in Service.",
+        ],
+      },
+      {
+        kind: 'features',
+        heading: 'What Canvas does today',
+        intro: 'These are features of the live Canvas module.',
+        items: [
+          { title: 'Infinite boards', body: 'Draw shapes, arrows, text and sticky notes on a board with no edges.', icon: 'canvas', status: 'suite' },
+          { title: 'Live editing together', body: 'Several people work on the same board at once and see each other\'s changes as they happen.', icon: 'team', status: 'suite' },
+          { title: 'Templates', body: 'Retrospective, mind map, kanban, roadmap with quarterly swim lanes, org chart, brainstorm, journey map and OKR tracker.', icon: 'stack', status: 'suite' },
+          { title: 'AI on the board', body: 'Group a pile of sticky notes into themes, grow a mind map from a topic, or summarize a board.', icon: 'bolt', status: 'suite' },
+          { title: 'Sharing by invite', body: 'Invite someone by email as an editor or a viewer, so your landlord or shopfitter can see the layout without changing it.', icon: 'link', status: 'suite' },
+          { title: 'Presentation mode and export', body: 'Present the board in a meeting, or export it as PNG, SVG, JPEG or WebP.', icon: 'chart', status: 'suite' },
+          { title: 'Folders', body: 'Keep layout plans, season plans and meeting boards organized so they are there next year.', icon: 'box', status: 'suite' },
+          { title: 'Task and deal cards', body: 'Drop cards styled like Projects tasks or CRM deals onto a board to plan around them. They are filled in by hand, not synced.', icon: 'kanban', status: 'suite' },
+        ],
+      },
+      {
+        kind: 'prose',
+        heading: 'Planning the shop floor',
+        body: [
+          "A shop floor layout decides how many bikes you can turn in a day. Where the drop-off area sits relative to the counter. How far a mechanic walks from the stand to the parts wall. Whether there is somewhere to park the bikes waiting on parts that is not in the way of the bikes that are ready. Where e-bikes charge, and whether that spot is away from the solvent tank.",
+          "Draw it on Canvas before you move anything. A rectangle for each stand, the truing station, the wash area, the parts wall, the counter and the customer area. Arrows for how a bike moves: in the door, tagged, on the rack, on a stand, washed, on the ready rack, out the door. Invite the mechanics as editors; they will spot the problem with the layout in about thirty seconds. Invite the shopfitter or landlord as a viewer.",
+          "When the layout is agreed, export it and pin the image in Chat so everyone knows where things are going, then turn the moving plan into tasks in Projects.",
+        ],
+      },
+      {
+        kind: 'steps',
+        heading: 'Map the season in one meeting',
+        intro: 'Use the roadmap template with one swim lane per part of the business.',
+        steps: [
+          { title: 'Start from the roadmap template', body: 'Quarters across the top. Lanes for the bench, the counter, hiring, events and inventory.' },
+          { title: 'Mark the fixed points', body: 'The first warm weekend, local races and events that bring riders in, the end of the season, the holiday rush on kids\' bikes.' },
+          { title: 'Work back from each one', body: 'Hiring in the months before the rush, pre-season prep before that, stock orders before the dates suppliers need them.' },
+          { title: 'Cluster the ideas', body: 'Have everyone add sticky notes for what went wrong last year, then let the AI group them into themes.' },
+          { title: 'Turn it into work', body: 'Each agreed item becomes a task in Projects with an owner and a date. The board stays as the picture of the year.' },
+        ],
+      },
+      {
+        kind: 'visual',
+        visual: 'bench-board',
+        heading: 'From a sketch to a board',
+        caption: 'Sketch how bikes should move through the shop on Canvas. Service work orders are live, but a board that tracks bikes by status is on the roadmap.',
+      },
+      {
+        kind: 'prose',
+        heading: 'Canvas and Service',
+        body: [
+          "Canvas does not connect to Service, and it does not need to. It is a thinking tool. What you decide on a board shows up elsewhere: a new checklist template in Service after a retro about comebacks, a project in Projects for the layout change, a pinned image in Chat.",
+          "The post-season retro is where Canvas earns its keep. Use the retrospective template, with what went well, what we learned, what was missing and what we wished for. Everyone adds notes. The comebacks from rushed tune-ups in May, the week the bench ran out of 11-speed chains, the rider who waited three days on a derailleur hanger. Group them into themes and decide what changes.",
+          "Some of those changes land in Service today, like a tougher tune-up checklist with a required photo of the chain gauge. Others, like a work-order board that shows which bikes are waiting on parts, are on the Service roadmap. Canvas is where you write both down so neither gets lost.",
+        ],
+      },
+      {
+        kind: 'callout',
+        tone: 'honest',
+        heading: 'What Canvas is and is not',
+        body: 'Canvas is a live whiteboard with templates, live editing, AI grouping and export. It does not connect to Service, and task and deal cards on a board are filled in by hand rather than synced with Projects or CRM.',
+      },
+    ],
+    faqs: [
+      { q: 'Can I plan my shop layout on Canvas?', a: 'Yes. Draw stands, the parts wall, the counter and the flow of bikes on an infinite board, invite your mechanics to edit it, and share it with a shopfitter or landlord as a viewer.' },
+      { q: 'Can the whole team edit a board at the same time?', a: 'Yes. Canvas supports live editing, so several people can work on one board at once and see each other\'s changes as they are made.' },
+      { q: 'What templates are included?', a: 'Retrospective, mind map, kanban, roadmap with quarterly swim lanes, wireframe, org chart, brainstorm, user journey map and OKR tracker. The roadmap and retrospective templates are the most useful for season planning.' },
+      { q: 'Can I export a board?', a: 'Yes, as PNG, SVG, JPEG or WebP, and you can present a board in presentation mode during a meeting.' },
+      { q: 'Does Canvas update my Projects tasks?', a: 'No. You can place task-style cards on a board to plan around them, but they are filled in by hand and do not sync. Create the real tasks in Projects once the plan is agreed.' },
+    ],
+    related: ['/platform/projects', '/platform/chat', '/product/work-orders', '/solutions/multi-location'],
+  },
+]
