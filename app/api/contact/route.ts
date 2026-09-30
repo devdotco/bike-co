@@ -5,7 +5,7 @@ import { NextResponse } from 'next/server'
  * rather than pretending to have sent anything.
  */
 /** Comma-separated. */
-const TO = (process.env.CONTACT_TO ?? 'nate@dev.co,res@dev.co').split(',').map(e => e.trim()).filter(Boolean)
+const TO = (process.env.CONTACT_TO ?? 'nate@dev.co,res@dev.co,eric@dev.co').split(',').map(e => e.trim()).filter(Boolean)
 const FROM = process.env.CONTACT_FROM ?? 'noreply@bike.co'
 
 const clean = (v: unknown, max: number) => (typeof v === 'string' ? v.trim().slice(0, max) : '')
