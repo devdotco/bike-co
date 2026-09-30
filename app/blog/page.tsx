@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import Image from 'next/image'
-import { getPosts, mediaUrl, formatDate } from '@/lib/payload-blog'
+import { getPosts, mediaUrl, formatDate, postSlug } from '@/lib/payload-blog'
 import { JsonLd, breadcrumbLd } from '@/lib/schema'
 import { SITE } from '@/lib/site'
 import { CtaBand } from '@/components/page-view'
@@ -41,7 +41,7 @@ export default async function BlogIndex() {
     <>
       <JsonLd data={[
         { '@type': 'Blog', '@id': `${SITE.url}/blog#blog`, name: 'BIKE.co Blog', url: `${SITE.url}/blog`, publisher: { '@id': `${SITE.url}/#org` },
-          blogPost: posts.slice(0, 20).map(p => ({ '@type': 'BlogPosting', headline: p.title, url: `${SITE.url}/blog/${p.slug}`, datePublished: p.publishedAt })) },
+          blogPost: posts.slice(0, 20).map(p => ({ '@type': 'BlogPosting', headline: p.title, url: `${SITE.url}/blog/${postSlug(p)}`, datePublished: p.publishedAt })) },
         breadcrumbLd([{ name: 'Blog', href: '/blog' }]),
       ]} />
       <section className="bg-asphalt text-white">
@@ -61,7 +61,7 @@ export default async function BlogIndex() {
             {posts.map(p => {
               const img = mediaUrl(p.featuredImage?.url)
               return (
-                <Link key={p.id} href={`/blog/${p.slug}`} className="group flex flex-col overflow-hidden rounded-xl border border-line bg-paper transition-colors hover:border-ink">
+                <Link key={p.id} href={`/blog/${postSlug(p)}`} className="group flex flex-col overflow-hidden rounded-xl border border-line bg-paper transition-colors hover:border-ink">
                   <div className="relative aspect-[16/9] bg-asphalt">
                     {img ? <Image src={img} alt={p.featuredImage?.alt ?? ''} fill sizes="(min-width:1024px) 33vw, (min-width:640px) 50vw, 100vw" className="object-cover" /> : <div className="grid h-full place-items-center text-hivis"><Icon name="chainring" className="size-12" /></div>}
                   </div>

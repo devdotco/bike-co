@@ -1,5 +1,5 @@
 import { allPages, COLLECTIONS } from '@/lib/content'
-import { getPosts } from '@/lib/payload-blog'
+import { getPosts, postSlug } from '@/lib/payload-blog'
 import { PLANS, PHONY_PER_MIN } from '@/data/pricing'
 import { SITE } from '@/lib/site'
 
@@ -9,7 +9,7 @@ export const revalidate = 3600
 export async function GET() {
   const pages = allPages()
   const section = (prefix: string) => pages.filter(p => p.href.startsWith(prefix)).map(p => `- [${p.page.title}](${SITE.url}${p.href}): ${p.page.summary}`).join('\n')
-  const posts = await getPosts()
+  const posts = (await getPosts()).filter(p => !p.excludeFromSitemap && p.seo?.robotsIndex !== false)
   const plans = PLANS.map(p => `- ${p.name}: ${p.base === null ? 'quote only' : p.key === 'starter' ? '$20 per user per month' : `$${p.base}/month`} — ${p.points.join('; ')}`).join('\n')
   const company = pages.filter(p => !Object.keys(COLLECTIONS).some(c => p.href.startsWith(`/${c}`)))
 
@@ -42,6 +42,6 @@ ${section('/resources')}
 
 ## Company
 ${company.map(p => `- [${p.page.title}](${SITE.url}${p.href}): ${p.page.summary}`).join('\n')}
-${posts.length ? `\n## Blog\n${posts.map(p => `- [${p.title}](${SITE.url}/blog/${p.slug})${p.excerpt ? `: ${p.excerpt}` : ''}`).join('\n')}\n` : ''}`
+${posts.length ? `\n## Blog\n${posts.map(p => `- [${p.title}](${SITE.url}/blog/${postSlug(p)})${p.excerpt ? `: ${p.excerpt}` : ''}`).join('\n')}\n` : ''}`
   return new Response(body, { headers: { 'content-type': 'text/plain; charset=utf-8', 'cache-control': 'public, max-age=3600' } })
 }

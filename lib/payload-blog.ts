@@ -9,12 +9,19 @@ import sanitizeHtml from "sanitize-html";
  */
 const BASE = (process.env.PAYLOAD_URL || "https://payload.dev.co").replace(/\/$/, "");
 const TENANT = process.env.PAYLOAD_TENANT_ID || "";
+/** payload.dev.co sits behind Cloudflare, which 403s (error 1010) a request without a browser-ish User-Agent. */
+const UA =
+  "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36";
 
 export type BlogPost = {
   id: string | number;
   title: string;
   slug: string;
+  /** Where the On-site pipeline published it, e.g. "/blog/how-to-price-a-tune-up". */
+  fullPath?: string | null;
   excerpt?: string;
+  seo?: { metaTitle?: string | null; metaDescription?: string | null; canonicalUrl?: string | null; robotsIndex?: boolean | null } | null;
+  excludeFromSitemap?: boolean | null;
   bodyHtml?: string;
   publishedAt?: string;
   updatedAt?: string;
@@ -43,9 +50,7 @@ async function query(qs: string): Promise<BlogPost[]> {
   try {
     const res = await fetch(
       `${BASE}/api/posts?where[tenant][equals]=${TENANT}&where[_status][equals]=published&depth=1&limit=200&${qs}`,
-      {
-        next: { revalidate: 300 },
-      },
+      { headers: { "User-Agent": UA }, next: { revalidate: 300 } },
     );
     if (!res.ok) return [];
     return ((await res.json()).docs ?? []) as BlogPost[];
@@ -56,8 +61,18 @@ async function query(qs: string): Promise<BlogPost[]> {
 
 export const getPosts = () => query("sort=-publishedAt");
 
+/** The public slug of a post: the last segment of its stored path, else its slug. */
+export function postSlug(p: BlogPost): string {
+  const fromPath = p.fullPath?.split("/").filter(Boolean).pop();
+  return fromPath && /^[a-z0-9-]{1,200}$/.test(fromPath) ? fromPath : p.slug;
+}
+
 export async function getPost(slug: string): Promise<BlogPost | null> {
   if (!/^[a-z0-9-]{1,200}$/.test(slug)) return null;
+  // The pipeline publishes at /blog/<slug>; match the stored path first so a post whose
+  // slug and path disagree still resolves to the URL the sitemap advertises.
+  const byPath = await query(`where[fullPath][equals]=${encodeURIComponent(`/blog/${slug}`)}`);
+  if (byPath[0]) return byPath[0];
   return (await query(`where[slug][equals]=${encodeURIComponent(slug)}`))[0] ?? null;
 }
 
@@ -220,7 +235,7 @@ export function cleanHtml(html: string | undefined): string {
       a: (tag, attribs) => ({
         tagName: "a",
         attribs:
-          attribs.href?.startsWith("http") && !attribs.href.includes("bike.co")
+          attribs.href?.startsWith("http") && !/^https?:\/\/(www\.)?bike\.co(\/|$)/.test(attribs.href)
             ? { ...attribs, rel: "noopener noreferrer", target: "_blank" }
             : attribs,
       }),

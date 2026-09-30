@@ -2,18 +2,20 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
-import { getPost, getPosts, cleanHtml, mediaUrl, formatDate } from '@/lib/payload-blog'
+import { getPost, getPosts, cleanHtml, mediaUrl, formatDate, postSlug } from '@/lib/payload-blog'
 import { JsonLd, breadcrumbLd } from '@/lib/schema'
 import { SITE } from '@/lib/site'
 import { CtaBand } from '@/components/page-view'
 import { Arrow } from '@/components/icons'
 
 export const revalidate = 300
+// New posts from the On-site pipeline render on first request, then cache.
+export const dynamicParams = true
 
 type Props = { params: Promise<{ slug: string }> }
 
 export async function generateStaticParams() {
-  return (await getPosts()).map(p => ({ slug: p.slug }))
+  return (await getPosts()).map(p => ({ slug: postSlug(p) }))
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -21,11 +23,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const post = await getPost(slug)
   if (!post) return {}
   const img = mediaUrl(post.featuredImage?.url)
+  const title = `${post.seo?.metaTitle || post.title} | BIKE.co`
+  const description = post.seo?.metaDescription || post.excerpt || undefined
+  const path = `/blog/${postSlug(post)}`
   return {
-    title: `${post.title} | BIKE.co`,
-    description: post.excerpt,
-    alternates: { canonical: `/blog/${post.slug}` },
-    openGraph: { type: 'article', title: post.title, description: post.excerpt, url: `/blog/${post.slug}`, publishedTime: post.publishedAt, images: img ? [img] : undefined },
+    title,
+    description,
+    alternates: { canonical: post.seo?.canonicalUrl || path },
+    robots: post.seo?.robotsIndex === false ? { index: false } : undefined,
+    openGraph: { type: 'article', title, description, url: path, publishedTime: post.publishedAt, images: img ? [img] : undefined },
   }
 }
 
@@ -33,6 +39,7 @@ export default async function BlogPost({ params }: Props) {
   const { slug } = await params
   const post = await getPost(slug)
   if (!post) notFound()
+  const path = `/blog/${postSlug(post)}`
   const img = mediaUrl(post.featuredImage?.url)
   const authors = (post.authors ?? []).filter(a => a?.name)
 
@@ -46,11 +53,11 @@ export default async function BlogPost({ params }: Props) {
           image: img,
           datePublished: post.publishedAt,
           dateModified: post.updatedAt ?? post.publishedAt,
-          mainEntityOfPage: `${SITE.url}/blog/${post.slug}`,
+          mainEntityOfPage: `${SITE.url}${path}`,
           author: authors.length ? authors.map(a => ({ '@type': 'Person', name: a.name, jobTitle: a.jobTitle })) : { '@id': `${SITE.url}/#org` },
           publisher: { '@id': `${SITE.url}/#org` },
         },
-        breadcrumbLd([{ name: 'Blog', href: '/blog' }, { name: post.title, href: `/blog/${post.slug}` }]),
+        breadcrumbLd([{ name: 'Blog', href: '/blog' }, { name: post.title, href: path }]),
       ]} />
       <article>
         <header className="bg-asphalt text-white">
